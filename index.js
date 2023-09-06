@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 mongoose.connect(`mongodb+srv://gayoungkim:abcd1234@cluster0.vx4znsr.mongodb.net/?retryWrites=true&w=majority`,{ useNewUrlParser: true, useUnifiedTopology: true }).then(()=> console.log('MongoDB Connected...'))
   .catch(err => console.log(err))
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World! 안녕'))
 
 app.post('/register', (req, res) => {
   //회원가입 정보를 client에서 가져오면
