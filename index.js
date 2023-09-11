@@ -4,7 +4,7 @@ const port = 5001
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key')
-
+const { auth } = require("./middleware/auth")
 const { User } = require("./models/User")
 
 app.use(bodyParser.urlencoded({extended: true}))
@@ -102,5 +102,36 @@ app.post('/api/users/login', (req, res)=>{
     //데이터 베이스에서 요청된 이메일이 있다면, 비밀번호가 맞는지 확인한다.
 
   // })
+
+
+  //role1이면 일반 유저, role이 0이 아니면 관리자
+app.get('/api/users/auth', auth, (req, res)=> {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0? false: true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  })
+})
+
+app.get('/api/users/logout', auth, (req, res) => {
+  //토큰을 가져와 무효화 시킨다.
+  User.findOneAndUpdate({_id:req.user._id}, {token: ""})
+  .then(()=>{
+    return res.status(200).send({success:true})
+  })
+  .catch(err=>{
+    return res.json({success:false, err})
+  })
+
+  // (err, user) => {
+  //   if (err) return res.json({success: false, err})
+  //   return res.status(200).send({success: true})
+  // })
+})
 
 app.listen(port, ()=> console.log(`Example app listening on port ${port}!`))
