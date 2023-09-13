@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {Routes, Route } from 'react-router-dom'
 import './App.css';
 
 import LandingPage from './components/views/LandingPage/LandingPage';
@@ -7,7 +7,7 @@ import RegisterPage from './components/views/RegisterPage/RegisterPage';
 
 function App() {
   return (
-    <Router>
+    <Routes>
       {/* <div>
         <ul>
           <li>
@@ -22,12 +22,11 @@ function App() {
         </ul>
         <hr />
       </div> */}
-      <div>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-      </div>
-    </Router>
+        {/* <Route index element={<LandingPage />} /> */}
+        <Route exact path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+    </Routes>
   );
 }
 
