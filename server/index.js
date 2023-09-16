@@ -15,9 +15,13 @@ const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI,{ useNewUrlParser: true, useUnifiedTopology: true }).then(()=> console.log('MongoDB Connected...'))
   .catch(err => console.log(err))
 
-app.get('/', (req, res) => res.send('Hello World! 안녕'))
+// app.get('/', (req, res) => res.send('Hello World! 안녕'))
 
-app.post('/register', (req, res) => {
+app.get('/api/hello', (req, res)=> {
+  res.send("안녕하세요.")
+})
+
+app.post('/api/users/register', (req, res) => {
   //회원가입 정보를 client에서 가져오면
   //데이터 베이스에 넣어준다.
 
@@ -57,7 +61,6 @@ app.post('/api/users/login', (req, res)=>{
         message: "제공된 이메일에 해당하는 유저가 없습니다."
       })
     }
-
     docs.comparePassword(req.body.password, (err, isMatch)=>{
       if(!isMatch)
         return res.json({loginSuccess: false, message:"비밀번호가 틀렸습니다."})
@@ -70,8 +73,8 @@ app.post('/api/users/login', (req, res)=>{
           .status(200)
           .json({ loginSuccess: true, userId: user._id })
         })
-      })
     })
+  })
       // user.comparePassword(req.body.password, (err, isMatch)=>{
       //   if(!isMatch)
       //     return res.json({loginSuccess: false, message:"비밀번호가 틀렸습니다."})
@@ -86,11 +89,10 @@ app.post('/api/users/login', (req, res)=>{
       //       .json({ loginSuccess: true, userId: user._id })
       //     })
       // })
-
     .catch(err=>{
       return res.status(400).send(err);
-      })
     })
+  })
   
   // , (err, user) => {
   //   if(!user) {
