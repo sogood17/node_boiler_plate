@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import  axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { loginUser, registerUser } from '../../../_actions/user_action'
+import { registerUser } from '../../../_actions/user_action'
 import { useNavigate } from 'react-router-dom'
 
 function RegisterPage() {
